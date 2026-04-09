@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Razor & Co. | Premium Barbershop</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a1a1a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b87c4f;
+      border-radius: 4px;
+    }
+
+    h1, h2, h3, .logo, .nav-links a, .btn, .section-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(184, 124, 79, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #f5e7d9;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #e6c9a8, #b87c4f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #e0e0e0;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: 0.3s;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: #b87c4f;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #b87c4f;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #e0e0e0;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      padding: 0 32px;
+    }
+
+    .hero-badge {
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #b87c4f;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero-content h1 {
+      font-size: 4.5rem;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #cfcfcf;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-weight: 600;
+      border-radius: 40px;
+      text-decoration: none;
+      transition: 0.25s;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: #b87c4f;
+      color: #0a0a0a;
+      border: 1px solid #b87c4f;
+    }
+
+    .btn-primary:hover {
+      background: #9e5e34;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(184,124,79,0.3);
+    }
+
+    .btn-outline {
+      border: 1px solid #b87c4f;
+      color: #f5e7d9;
+    }
+
+    .btn-outline:hover {
+      background: #b87c4f;
+      color: #0a0a0a;
+      transform: translateY(-3px);
+    }
+
+    /* Section Umum */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+      color: #f2e6da;
+    }
+
+    .section-sub {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 60px;
+      color: #aaa;
+      font-size: 1rem;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: #111111;
+      border-radius: 24px;
+      padding: 40px 28px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid #222;
+      backdrop-filter: blur(4px);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      border-color: #b87c4f;
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.6);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      color: #b87c4f;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 1.7rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .service-card p {
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #e6c9a8;
+    }
+
+    /* About / Barber Team */
+    .about-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .about-text p {
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #bcbcbc;
+    }
+
+    .signature {
+      font-family: 'Playfair Display', cursive;
+      font-size: 1.4rem;
+      margin-top: 20px;
+      color: #b87c4f;
+    }
+
+    .about-img {
+      flex: 1;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+    }
+
+    .about-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .about-img:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Team Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    .team-member {
+      background: #0f0f0f;
+      border-radius: 28px;
+      overflow: hidden;
+      text-align: center;
+      transition: 0.3s;
+      border: 1px solid #222;
+    }
+
+    .team-member img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      filter: grayscale(0.2);
+      transition: 0.4s;
+    }
+
+    .team-member:hover img {
+      filter: grayscale(0);
+      transform: scale(1.02);
+    }
+
+    .team-info {
+      padding: 20px;
+    }
+
+    .team-info h4 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .team-info p {
+      color: #b87c4f;
+      font-weight: 500;
+    }
+
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      border-radius: 20px;
+      overflow: hidden;
+      height: 280px;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.4s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.07);
+    }
+
+    /* Testimonial */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .testi-card {
+      background: #111;
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .testi-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      color: #ccc;
+      line-height: 1.5;
+    }
+
+    .testi-author {
+      font-weight: 700;
+      color: #b87c4f;
+    }
+
+    /* Booking CTA */
+    .booking-cta {
+      background: linear-gradient(135deg, #0f0c08, #1a130c);
+      border-radius: 40px;
+      padding: 60px 40px;
+      text-align: center;
+      margin: 40px 0;
+      border: 1px solid #b87c4f40;
+    }
+
+    .booking-cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      background: #030303;
+      padding: 60px 0 30px;
+      border-top: 1px solid #222;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      color: #e6c9a8;
+    }
+
+    .footer-col p, .footer-col a {
+      color: #999;
+      line-height: 1.8;
+      text-decoration: none;
+    }
+
+    .social-icons a {
+      font-size: 1.4rem;
+      margin-right: 18px;
+      transition: 0.2s;
+    }
+
+    .social-icons a:hover {
+      color: #b87c4f;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #222;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        background: #0a0a0aef;
+        backdrop-filter: blur(20px);
+        width: 70%;
+        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 60px;
+        transition: 0.3s;
+        gap: 2rem;
+        border-right: 1px solid #b87c4f;
+      }
+      .nav-links.active {
+        left: 0;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .about-wrap {
+        flex-direction: column;
+      }
+      .container {
+        padding: 0 20px;
+      }
+    }
+
+    /* Form sederhana untuk booking demo (dummy) */
+    .booking-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .booking-form input, .booking-form select {
+      padding: 14px 18px;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 60px;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      min-width: 200px;
+    }
+    .booking-form input:focus, .booking-form select:focus {
+      border-color: #b87c4f;
+    }
+    .booking-form button {
+      border: none;
+      cursor: pointer;
+      background: #b87c4f;
+      color: #0a0a0a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">✂️ RAZOR & CO.</div>
+      <div class="menu-toggle" id="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home" class="active">BERANDA</a></li>
+        <li><a href="#services">LAYANAN</a></li>
+        <li><a href="#about">TENTANG</a></li>
+        <li><a href="#team">BARBER</a></li>
+        <li><a href="#gallery">GALERI</a></li>
+        <li><a href="#booking">BOOKING</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-content container">
+        <div class="hero-badge">EST. 2025 • PREMIUM GROOMING</div>
+        <h1>Razor precision.<br>Classic elegance.</h1>
+        <p>Rasakan pengalaman potong rambut & cukur janggut dengan sentuhan klasik modern. Barber profesional, atmosfer eksklusif, dan perawatan terbaik untuk pria sejati.</p>
+        <div class="btn-group">
+          <a href="#booking" class="btn btn-primary">BOOK SEKARANG</a>
+          <a href="#services" class="btn btn-outline">JELAJAHI LAYANAN</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title">Signature Services</h2>
+        <p class="section-sub">Potongan rambut presisi, cukur tradisional hot towel, hingga perawatan rambut premium.</p>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-cut"></i></div>
+            <h3>Executive Haircut</h3>
+            <p>Potongan rambut klasik & modern dengan teknik gunting & clipper. Konsultasi gaya.</p>
+            <div class="price">Mulai Rp 85K</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-beard"></i></div>
+            <h3>Royal Shave</h3>
+            <p>Cukur janggut hot towel + pijat wajah, silet tradisional. Pengalaman raja.</p>
+            <div class="price">Rp 120K</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-hand-sparkles"></i></div>
+            <h3>Beard Sculpting</h3>
+            <p>Styling & shaping janggut dengan wax premium, lines tajam dan rapi.</p>
+            <div class="price">Rp 65K</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-spa"></i></div>
+            <h3>Hair Tonic Spa</h3>
+            <p>Keramas+tonik khusus + pijat kepala untuk relaksasi dan kesehatan rambut.</p>
+            <div class="price">Rp 95K</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Philosophy -->
+    <section id="about">
+      <div class="container about-wrap">
+        <div class="about-text">
+          <h3>Lebih dari sekadar barbershop</h3>
+          <p>Razor & Co. terinspirasi dari barbershop legendaris di London dan New York. Kami menghadirkan tradisi cukur klasik yang dipadukan dengan gaya urban masa kini. Setiap kunjungan adalah ritual perawatan diri, dengan alat steril, kursi barber premium, dan produk pilihan.</p>
+          <p>Barber kami telah terlatih khusus dan selalu mengutamakan kenyamanan serta detail presisi. Dari potongan rambut bisnis, fade modern, hingga trim janggut eksklusif.</p>
+          <div class="signature">— The Gentlemen's Choice</div>
+        </div>
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="interior barbershop mewah">
+        </div>
+      </div>
+    </section>
+
+    <!-- Barber Team -->
+    <section id="team">
+      <div class="container">
+        <h2 class="section-title">Master Barbers</h2>
+        <p class="section-sub">Para ahli dengan pengalaman lebih dari 7 tahun di industri grooming pria.</p>
+        <div class="team-grid">
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80" alt="Barber 1">
+            <div class="team-info">
+              <h4>Michael Styles</h4>
+              <p>Head Barber</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1581803118522-7b72a50f7e9f?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80" alt="Barber 2">
+            <div class="team-info">
+              <h4>James Cortez</h4>
+              <p>Fade Specialist</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1556157382-97eda2f9e2bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Barber 3">
+            <div class="team-info">
+              <h4>Lucas Kane</h4>
+              <p>Shave Master</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80" alt="Barber 4">
+            <div class="team-info">
+              <h4>Raka Aditya</h4>
+              <p>Creative Stylist</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Premium -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="section-title">Our Gallery</h2>
+        <p class="section-sub">Momen potongan presisi, suasana barbershop, dan detail craftsmanship.</p>
+        <div class="gallery-grid">
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="haircut"></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&auto=format&fit=crop&w=688&q=80" alt="shaving"></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="barber tools"></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="chair"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section>
+      <div class="container">
+        <h2 class="section-title">Apa Kata Mereka</h2>
+        <p class="section-sub">Klien puas dengan layanan dan hasil akhir yang memukau.</p>
+        <div class="testimonial-grid">
+          <div class="testi-card">
+            <div class="testi-text">“Pelayanan sangat profesional, barber-nya teliti banget. Hasil fade presisi dan suasana barbershop-nya klasik elegan. Rekomendasi!”</div>
+            <div class="testi-author">— Dimas P.</div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-text">“Royal Shave-nya bikin rileks banget, handuk hangat dan pijatan mantap. Langganan tetap setiap 2 minggu!”</div>
+            <div class="testi-author">— Aldi S.</div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-text">“Tempatnya aesthetic, cocok buat hunting foto. Barber ramah & paham gaya rambut kekinian. 10/10 bakal balik.”</div>
+            <div class="testi-author">— Rey M.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking CTA + Form Simulasi -->
+    <section id="booking">
+      <div class="container">
+        <div class="booking-cta">
+          <h2>Ambil jadwalmu sekarang</h2>
+          <p>Booking kursi prioritas, dapatkan welcome drink & diskon 10% untuk first timer.</p>
+          <div class="booking-form">
+            <input type="text" placeholder="Nama lengkap" id="bookingName">
+            <select id="bookingService">
+              <option value="Executive Haircut">Executive Haircut</option>
+              <option value="Royal Shave">Royal Shave</option>
+              <option value="Beard Sculpting">Beard Sculpting</option>
+              <option value="Hair Tonic Spa">Hair Tonic Spa</option>
+            </select>
+            <input type="date" id="bookingDate">
+            <button class="btn btn-primary" id="bookBtn">BOOKING VIA WHATSAPP</button>
+          </div>
+          <p style="font-size: 0.75rem; margin-top: 20px;">*Klik tombol untuk simulasi pemesanan, akan terhubung ke WA CS kami.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>RAZOR & CO.</h4>
+          <p>Premium Barbershop • Jakarta | Surabaya<br>Jl. Kemang Raya No. 88, Jakarta Selatan</p>
+          <p>📞 +62 812 3456 7890<br>✉️ hello@razorco.id</p>
+        </div>
+        <div class="footer-col">
+          <h4>Jam Operasional</h4>
+          <p>Senin - Sabtu : 10:00 - 21:00<br>Minggu : 12:00 - 18:00</p>
+        </div>
+        <div class="footer-col">
+          <h4>Ikuti Kami</h4>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2025 RAZOR & CO. | The Modern Gentleman's Sanctuary.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    // Close menu saat klik link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Active link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollPos = window.scrollY + 150;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        if(scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight){
+          current = section.getAttribute('id');
+        }
+      });
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        if(link.getAttribute('href') === `#${current}`){
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Booking simulasi WA
+    const bookBtn = document.getElementById('bookBtn');
+    bookBtn.addEventListener('click', () => {
+      const name = document.getElementById('bookingName').value.trim();
+      const service = document.getElementById('bookingService').value;
+      const date = document.getElementById('bookingDate').value;
+      if(!name || !date){
+        alert("Mohon isi nama lengkap dan pilih tanggal booking.");
+        return;
+      }
+      const message = `Halo Razor & Co., saya ${name} ingin booking layanan *${service}* pada tanggal ${date}. Apakah tersedia? Terima kasih.`;
+      const encodedMsg = encodeURIComponent(message);
+      window.open(`https://wa.me/6281234567890?text=${encodedMsg}`, '_blank');
+    });
+
+    // Smooth scroll untuk semua anchor
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if(href === "#" || href === "") return;
+        const targetElem = document.querySelector(href);
+        if(targetElem){
+          e.preventDefault();
+          targetElem.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
